@@ -1,0 +1,35 @@
+{
+  "case_id": "CON-001",
+  "label": "contradictory",
+  "meaning": "Two credible records disagree about whether a test passed.",
+  "requirement": "The submitted implementation must pass test suite T.",
+  "response": "All tests passed.",
+  "evidence": [
+    {
+      "id": "EV-1",
+      "type": "test_result",
+      "content": "CI run 104 reports test suite T: PASS."
+    },
+    {
+      "id": "EV-2",
+      "type": "test_result",
+      "content": "CI run 105 on the submitted commit reports test suite T: FAIL."
+    },
+    {
+      "id": "EV-3",
+      "type": "commit_reference",
+      "content": "Submitted commit matches CI run 105; run 104 was for an earlier commit."
+    }
+  ],
+  "expected_assessment": {
+    "evaluation_status": "PARTIAL",
+    "finding_codes": [
+      "CONTRADICTORY_EVIDENCE",
+      "FUNCTIONAL_FAILURE"
+    ],
+    "severity": "MEDIUM",
+    "recommendation": "RECOMMEND_MANUAL_REVIEW",
+    "manual_review_required": true
+  },
+  "rationale": "The commit linkage resolves which run is relevant, but the evaluator should retain both records and explain source hierarchy/commit mismatch. If commit linkage were unavailable, leave contradiction unresolved."
+}

@@ -1,0 +1,30 @@
+{
+  "case_id": "AMB-001",
+  "label": "ambiguous",
+  "meaning": "Insufficiently precise baseline; evaluator must avoid guessing.",
+  "requirement": "Make the API fast and production-ready.",
+  "response": "Implemented a synchronous endpoint with no benchmark, load test, or deployment target.",
+  "evidence": [
+    {
+      "id": "EV-1",
+      "type": "requirement_snapshot",
+      "content": "The words fast and production-ready are not quantified or operationally defined."
+    },
+    {
+      "id": "EV-2",
+      "type": "response_snapshot",
+      "content": "Endpoint implementation only."
+    }
+  ],
+  "expected_assessment": {
+    "evaluation_status": "INSUFFICIENT_EVIDENCE",
+    "finding_codes": [
+      "REQ_AMBIGUOUS",
+      "OUTPUT_INCOMPLETE"
+    ],
+    "severity": "UNASSESSED",
+    "recommendation": "RECOMMEND_MANUAL_REVIEW",
+    "manual_review_required": true
+  },
+  "rationale": "Do not invent latency, availability, scaling, security, or deployment thresholds."
+}

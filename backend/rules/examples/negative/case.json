@@ -1,0 +1,32 @@
+{
+  "case_id": "NEG-001",
+  "label": "negative",
+  "meaning": "Evidence does not support a failure claim.",
+  "requirement": "Create a Python function add(a, b) that returns the sum. Include exactly one unit test.",
+  "response": "def add(a, b):\\n    return a + b\\n\\ndef test_add():\\n    assert add(2, 3) == 5",
+  "evidence": [
+    {
+      "id": "EV-1",
+      "type": "requirement_snapshot",
+      "content": "Function and exactly one unit test required."
+    },
+    {
+      "id": "EV-2",
+      "type": "response_snapshot",
+      "content": "Function and one test are present."
+    },
+    {
+      "id": "EV-3",
+      "type": "test_result",
+      "content": "test_add passed in the recorded environment."
+    }
+  ],
+  "expected_assessment": {
+    "evaluation_status": "COMPLETED",
+    "finding_codes": [],
+    "severity": "UNASSESSED",
+    "recommendation": "RECOMMEND_REJECTION",
+    "manual_review_required": false
+  },
+  "rationale": "No objective defect is evidenced. RECOMMEND_REJECTION here means reject the failure claim recommendation; it is not a production lifecycle decision."
+}

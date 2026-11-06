@@ -1,0 +1,1 @@
+export default function EmptyState({title='Nothing here yet',description='Records will appear when data is added.'}){return <div className="empty"><strong>{title}</strong><p>{description}</p></div>}

@@ -1,0 +1,483 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://st-insurance-pool.local/schemas/evaluation_schema.json",
+  "title": "ST Insurance Pool Evaluation Result",
+  "description": "Prototype advisory assessment. Not a claim approval, compensation calculation, or settlement instruction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evaluation_id",
+    "claim_id",
+    "interaction_id",
+    "evaluation_status",
+    "requirement_assessment",
+    "dimensions",
+    "findings",
+    "severity",
+    "confidence",
+    "evidence_summary",
+    "missing_evidence",
+    "contradictions",
+    "recommendation",
+    "manual_review_required",
+    "review_reasons",
+    "usage_attribution",
+    "policy_refs",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "evaluation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "claim_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 128
+    },
+    "interaction_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 128
+    },
+    "evaluation_status": {
+      "enum": [
+        "COMPLETED",
+        "PARTIAL",
+        "INSUFFICIENT_EVIDENCE",
+        "EVALUATOR_ERROR"
+      ]
+    },
+    "requirement_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_available",
+        "summary",
+        "criteria"
+      ],
+      "properties": {
+        "requirement_available": {
+          "type": "boolean"
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 3000
+        },
+        "criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "criterion_id",
+              "criterion_text",
+              "status",
+              "explanation",
+              "evidence_refs"
+            ],
+            "properties": {
+              "criterion_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "criterion_text": {
+                "type": "string",
+                "maxLength": 2000
+              },
+              "status": {
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "PARTIAL",
+                  "NOT_ASSESSED",
+                  "CONFLICTING"
+                ]
+              },
+              "explanation": {
+                "type": "string",
+                "maxLength": 3000
+              },
+              "evidence_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                "uniqueItems": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "dimensions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dimension",
+          "status",
+          "summary",
+          "evidence_refs"
+        ],
+        "properties": {
+          "dimension": {
+            "enum": [
+              "REQUIREMENT_ALIGNMENT",
+              "FACTUAL_CORRECTNESS",
+              "FUNCTIONAL_CORRECTNESS",
+              "COMPLETENESS",
+              "CONSTRAINT_COMPLIANCE",
+              "EXECUTION_TOOL_INTEGRITY",
+              "SUBJECTIVE_QUALITY"
+            ]
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "PARTIAL",
+              "NOT_ASSESSED",
+              "CONFLICTING"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 3000
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "finding_id",
+          "code",
+          "level",
+          "role",
+          "impact",
+          "description",
+          "evidence_refs",
+          "affected_criteria",
+          "confidence",
+          "compensability_signal"
+        ],
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "code": {
+            "enum": [
+              "REQ_MISUNDERSTOOD",
+              "REQ_OMITTED",
+              "REQ_CONFLICT",
+              "REQ_AMBIGUOUS",
+              "FACT_UNSUPPORTED",
+              "FACT_INCORRECT",
+              "HALLUCINATED_ARTIFACT",
+              "OUTPUT_INCOMPLETE",
+              "FUNCTIONAL_FAILURE",
+              "REGRESSION",
+              "CONSTRAINT_VIOLATION",
+              "FORMAT_VIOLATION",
+              "TOOL_FAILURE",
+              "EXECUTION_PARTIAL",
+              "CONTEXT_OMISSION",
+              "CONTEXT_CORRUPTION",
+              "SUBJECTIVE_MISMATCH",
+              "EXTERNAL_FAILURE",
+              "UNKNOWN_FAILURE"
+            ]
+          },
+          "level": {
+            "enum": [
+              "REQUIREMENT",
+              "INTERACTION",
+              "EXECUTION",
+              "MODEL_CALL",
+              "ARTIFACT"
+            ]
+          },
+          "role": {
+            "enum": [
+              "PRIMARY",
+              "CONTRIBUTING",
+              "SECONDARY"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL",
+              "UNASSESSED"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "uniqueItems": true
+          },
+          "evidence_missing_reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 1000
+          },
+          "affected_criteria": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "uniqueItems": true
+          },
+          "confidence": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1
+          },
+          "compensability_signal": {
+            "enum": [
+              "POTENTIALLY_ELIGIBLE",
+              "NOT_ELIGIBLE_UNDER_PROTOTYPE",
+              "UNRESOLVED",
+              "NOT_EVALUATED"
+            ]
+          }
+        }
+      }
+    },
+    "severity": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL",
+        "UNASSESSED"
+      ]
+    },
+    "confidence": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence_summary": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item",
+          "reason",
+          "blocks_automated_decision"
+        ],
+        "properties": {
+          "item": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "blocks_automated_decision": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "description",
+          "evidence_refs",
+          "resolution_status"
+        ],
+        "properties": {
+          "description": {
+            "type": "string",
+            "maxLength": 3000
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "uniqueItems": true
+          },
+          "resolution_status": {
+            "enum": [
+              "UNRESOLVED",
+              "RESOLVED_BY_SOURCE_HIERARCHY",
+              "RESOLVED_BY_HUMAN",
+              "NOT_APPLICABLE"
+            ]
+          }
+        }
+      }
+    },
+    "recommendation": {
+      "enum": [
+        "RECOMMEND_APPROVAL",
+        "RECOMMEND_PARTIAL_APPROVAL",
+        "RECOMMEND_REJECTION",
+        "RECOMMEND_MANUAL_REVIEW",
+        "RECOMMEND_WITHHOLD"
+      ]
+    },
+    "manual_review_required": {
+      "type": "boolean"
+    },
+    "review_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "uniqueItems": true
+    },
+    "usage_attribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "affected_call_ids",
+        "input_tokens",
+        "output_tokens",
+        "source_refs",
+        "notes"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "VERIFIED",
+            "PARTIALLY_VERIFIED",
+            "UNVERIFIED",
+            "CONFLICTING",
+            "NOT_AVAILABLE",
+            "NOT_ASSESSED"
+          ]
+        },
+        "affected_call_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "uniqueItems": true
+        },
+        "input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 3000
+        }
+      }
+    },
+    "policy_refs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rules_version",
+        "taxonomy_version",
+        "evaluation_policy_version"
+      ],
+      "properties": {
+        "rules_version": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "taxonomy_version": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "evaluation_policy_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "uniqueItems": true
+    }
+  }
+}

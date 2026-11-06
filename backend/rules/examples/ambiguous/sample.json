@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "evaluation_id": "demo-eval-001",
+  "claim_id": "demo-claim-001",
+  "interaction_id": "demo-interaction-001",
+  "evaluation_status": "COMPLETED",
+  "requirement_assessment": {
+    "requirement_available": true,
+    "summary": "Demo criterion was not met based on the referenced artifact.",
+    "criteria": [
+      {
+        "criterion_id": "AC-1",
+        "criterion_text": "Illustrative acceptance criterion",
+        "status": "FAIL",
+        "explanation": "The delivered artifact does not demonstrate this criterion.",
+        "evidence_refs": [
+          "EV-1"
+        ]
+      }
+    ]
+  },
+  "dimensions": [
+    {
+      "dimension": "REQUIREMENT_ALIGNMENT",
+      "status": "FAIL",
+      "summary": "One explicit criterion is unmet.",
+      "evidence_refs": [
+        "EV-1"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-1",
+      "code": "REQ_OMITTED",
+      "level": "ARTIFACT",
+      "role": "PRIMARY",
+      "impact": "MEDIUM",
+      "description": "Illustrative unmet criterion.",
+      "evidence_refs": [
+        "EV-1"
+      ],
+      "evidence_missing_reason": null,
+      "affected_criteria": [
+        "AC-1"
+      ],
+      "confidence": 0.82,
+      "compensability_signal": "POTENTIALLY_ELIGIBLE"
+    }
+  ],
+  "severity": "MEDIUM",
+  "confidence": 0.82,
+  "evidence_summary": "Demo-only evidence summary.",
+  "missing_evidence": [],
+  "contradictions": [],
+  "recommendation": "RECOMMEND_MANUAL_REVIEW",
+  "manual_review_required": true,
+  "review_reasons": [
+    "Prototype demo: human review required before any claim decision."
+  ],
+  "usage_attribution": {
+    "status": "NOT_AVAILABLE",
+    "affected_call_ids": [],
+    "input_tokens": null,
+    "output_tokens": null,
+    "source_refs": [],
+    "notes": "No verified usage supplied in this example."
+  },
+  "policy_refs": {
+    "rules_version": "prototype-1.0.0",
+    "taxonomy_version": "prototype-1.0.0",
+    "evaluation_policy_version": null
+  },
+  "limitations": [
+    "Illustrative sample only; no actual claim determination."
+  ]
+}
