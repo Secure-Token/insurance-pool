@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ST Insurance Pool — Demo v0.1
 Simulation only. This project uses simulated internal credits. It does not provide provider refunds, real funds, underwriting, or production insurance/settlement.
 
@@ -143,3 +144,4 @@ Dashboard/API request returns 404	Wrong API path or backend route	Check Request 
 Frontend cannot connect	Backend is stopped or wrong base URL	Start FastAPI and verify http://localhost:8000/health
 PowerShell activation blocked	Execution policy blocks script	Use the process-scoped bypass shown in Step 4
 
+=======
