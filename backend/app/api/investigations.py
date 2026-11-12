@@ -8,3 +8,4 @@ def all():return listing()
 def open_one(cid,p:InvestigationCreate):
  try:return create(cid,p.notes)
  except LookupError as e:raise HTTPException(404,str(e))
+ except ValueError as e:raise HTTPException(409,str(e))

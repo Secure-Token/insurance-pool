@@ -145,3 +145,11 @@ Frontend cannot connect	Backend is stopped or wrong base URL	Start FastAPI and v
 PowerShell activation blocked	Execution policy blocks script	Use the process-scoped bypass shown in Step 4
 
 =======
+
+
+## ST V1 integrated build notes
+- Claim requirement accepts any non-empty string (e.g. `5*25`); whitespace-only validation should be handled at UI/API boundary if desired.
+- Claim status values used by this build: SUBMITTED, ELIGIBILITY_REVIEW, INVESTIGATING, APPROVED, PARTIALLY_APPROVED, REJECTED, SETTLED, WITHDRAWN.
+- Settlement is simulated internal credits. It atomically creates a settlement, credits the claimant wallet, records wallet/pool ledger entries, and updates claim status. No external money or provider refund is involved.
+- Added API: `GET /api/wallet/{claimant_id}`.
+- Existing DB is migrated additively at startup; new wallet/pool tables are created without dropping claims.
